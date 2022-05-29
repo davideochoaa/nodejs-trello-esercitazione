@@ -9,6 +9,6 @@ const connection = app.listen(PORT, () => {
 
 process.on("SIGINT", () =>{ //Messaggio di chiusura al termine del server
     connection.close(() =>{
-        console.log("Server Closed");
+        console.log("Closed Server");
     })
 });
