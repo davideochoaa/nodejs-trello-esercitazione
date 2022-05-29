@@ -9,3 +9,18 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Dashboard {
+  id       String    @id @default(cuid())
+  name     String
+  position Int //position ci servirà per definire l'ordine
+  Content  Content[]
+}
+
+model Content {
+  id          String    @id @default(cuid())
+  text        String
+  position    Int
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
+  dashboardId String
+}
