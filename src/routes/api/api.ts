@@ -4,7 +4,6 @@ import express from "express";
 import { DashboardService } from "../../service/dashboard-service";
 import { getJwtKeys } from "../../key";
 import jwt from "jsonwebtoken"
-import { Verify } from "crypto";
 import { body, validationResult } from "express-validator";
 
 const apiRouter = Router();
@@ -33,7 +32,7 @@ async function verifyToken(header: string): Promise<string | null> {
 
 apiRouter.use(async (req,res, next) => {
     const authHeader = req.headers ['authorization'];
-    const userId = await verifyToken(authHeader);
+    const userId = await verifyToken(authHeader!);
     if(!userId){
         return res.status(400).send({error: "invalid authentication"})
     }
