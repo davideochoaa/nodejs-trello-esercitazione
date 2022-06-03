@@ -65,7 +65,7 @@ Utilizzare Insomnia o Postman per il test delle richieste.
 
 Per poter testare le richieste api avremmo bisogni di insomnia o postman e configurare al meglio ogni richiesta.
 
-<PRE>
+<br>
 1. EFFETTUARE LA REGISTRAZIONE DI UN UTENTE METODO POST. - INSERIRE NELL'URL :
 
 ```sh
@@ -80,8 +80,8 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 }
 ```
 (BEARER TOKEN NON NECESSARIO)
-</PRE>
-<PRE>
+
+<br>
 2. EFFETTUARE IL LOGIN DI UN UTENTE METODO POST. - INSERIRE NELL'URL :
 
 ```sh
@@ -95,16 +95,14 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 }
 ```
 :warning: **COPIARE IL BEARER TOKEN**: Dovrai utilizzare il Bearer Token all'interno di [Auth - Selezionando BEARER come metodo di autenticazione]
-</PRE>
-<PRE>
+<br>
 3. VISUALIZZARE TUTTE LE DASHBOARD DI UN UTENTE - INSERIRE NELL'URL :
 
 ```sh
 http://localhost:3333/api/list
 ```
 :warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
-</PRE>
-<PRE>
+<br>
 4. CREARE UNA DASHBOARD TRAMITE METODO POST.
 INSERIRE NELL'URL :
 
@@ -118,8 +116,7 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 }
 ```
 :warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
-</PRE>
-<PRE>
+<br>
 5. CREARE UNC CONTENUTO ALL'INTERNO DI UNA DASHBOARD TRAMITE METODO POST - INSERIRE NELL'URL E SOSTITUIRE :IDDASHBOARD CON L'ID DELLA DASHBOARD NELLA QUALE SI VUOLE CREARE IL CONTENUTO:
 
 ```sh
@@ -132,4 +129,4 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 }
 ```
 :warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
-</PRE>
+
