@@ -63,7 +63,7 @@ Utilizzare Insomnia o Postman per il test delle richieste.
 
 # INSOMNIA O POSTMAN - TEST DELLE RICHIESTE API
 
-Per poter testare le richieste api avremmo bisogni di insomnia o postman e configurare al meglio ogni richiesta.
+Per poter testare le richieste api avremmo bisogno di insomnia o postman e configurare al meglio ogni richiesta.
 
 
 ## 1. EFFETTUARE LA REGISTRAZIONE DI UN UTENTE METODO POST. - INSERIRE NELL'URL :
@@ -82,7 +82,7 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 (BEARER TOKEN NON NECESSARIO)
 
 
-## 2. EFFETTUARE IL LOGIN DI UN UTENTE METODO POST. - INSERIRE NELL'URL :
+## 2. EFFETTUARE IL LOGIN DI UN UTENTE TRAMITE METODO POST. - INSERIRE NELL'URL :
 
 ```sh
 http://localhost:3333/user/login
@@ -97,7 +97,7 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 :warning: **COPIARE IL BEARER TOKEN**: Dovrai utilizzare il Bearer Token all'interno di [Auth - Selezionando BEARER come metodo di autenticazione]
 
 
-## 3. VISUALIZZARE TUTTE LE DASHBOARD DI UN UTENTE - INSERIRE NELL'URL :
+## 3. VISUALIZZARE TUTTE LE DASHBOARD DI UN UTENTE TRAMITE METODO GET - INSERIRE NELL'URL :
 
 ```sh
 http://localhost:3333/api/list
@@ -120,7 +120,7 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 :warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
 
 
-## 5. CREARE UNC CONTENUTO ALL'INTERNO DI UNA DASHBOARD TRAMITE METODO POST - INSERIRE NELL'URL E SOSTITUIRE :IDDASHBOARD CON L'ID DELLA DASHBOARD NELLA QUALE SI VUOLE CREARE IL CONTENUTO:
+## 5. CREARE UN CONTENUTO ALL'INTERNO DI UNA DASHBOARD TRAMITE METODO POST - INSERIRE NELL'URL E SOSTITUIRE :IDDASHBOARD CON L'ID DELLA DASHBOARD NELLA QUALE SI VUOLE CREARE IL CONTENUTO:
 
 ```sh
 http://localhost:3333/api/*:IDDASHBOARD*
@@ -148,3 +148,6 @@ http://localhost:3333/api/*:IDDASHBOARD*
 http://localhost:3333/api/*:IDDASHBOARD*/*:IDCONTENUTO
 ```
 :warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
+
+# CARTELLA DIST 
+Ho lasciato la cartella dist perché al suo interno vi è la cartella public con il relativo index.html e script.js - avviare index.html separatamente tramite il plugin di Visual Studio - Live Server . Per poter visualizzare completamente l'interfaccia grafica. 
