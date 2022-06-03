@@ -66,8 +66,7 @@ Utilizzare Insomnia o Postman per il test delle richieste.
 Per poter testare le richieste api avremmo bisogni di insomnia o postman e configurare al meglio ogni richiesta.
 
 
-1. EFFETTUARE LA REGISTRAZIONE DI UN UTENTE METODO POST
-(Bearer Token NON NECESSARIO)
+1. EFFETTUARE LA REGISTRAZIONE DI UN UTENTE METODO POST.
 INSERIRE NELL'URL :
 
 ```sh
@@ -81,3 +80,57 @@ INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
 	"name" : "Gino Paoli"
 }
 ```
+(BEARER TOKEN NON NECESSARIO)
+
+
+2. EFFETTUARE IL LOGIN DI UN UTENTE METODO POST.
+INSERIRE NELL'URL :
+
+```sh
+http://localhost:3333/user/login
+```
+INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
+```sh
+{
+	"email" : "ginopaoli@gimail.gino",
+	"password" : "ginogino"
+}
+```
+:warning: **COPIARE IL BEARER TOKEN**: Dovrai utilizzare il Bearer Token all'interno di [Auth - Selezionando BEARER come metodo di autenticazione]
+
+3. VISUALIZZARE TUTTE LE DASHBOARD DI UN UTENTE
+INSERIRE NELL'URL :
+
+```sh
+http://localhost:3333/api/list
+```
+:warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
+
+4. CREARE UNA DASHBOARD TRAMITE METODO POST.
+INSERIRE NELL'URL :
+
+```sh
+http://localhost:3333/api/
+```
+INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
+```sh
+{
+	"name" : "NUOVA DASHBOARD DI GINO"
+}
+```
+:warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
+
+5. CREARE UNC CONTENUTO ALL'INTERNO DI UNA DASHBOARD TRAMITE METODO POST.
+INSERIRE NELL'URL E SOSTITUIRE :IDDASHBOARD CON L'ID DELLA DASHBOARD NELLA QUALE SI VUOLE CREARE IL CONTENUTO:
+
+```sh
+http://localhost:3333/api/*:IDDASHBOARD*
+```
+INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
+```sh
+{
+	"text" : "CONTENUTO DELLA MIA CARD ALL'INTERNO DELLA DASHBOARD DI GINO"
+}
+```
+:warning: **UTILIZZARE IL BEARER TOKEN ALL'INTERNO DI [AUTH]**
+
