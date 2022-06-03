@@ -1,0 +1,132 @@
+@import url("stylesheets/normalize.css");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400&family=Sora:wght@400;700&display=swap');
+
+body{
+    width:100vw;
+    height: 100vh;
+    background-color: #22292F;
+    font-family: 'Sora', sans-serif;
+}
+* {
+    box-sizing: border-box;
+}
+header{
+    color:white;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    background-color: #0C1822;
+    height: 100px;
+    display: flex;
+    gap:20px;
+}
+
+.bottone{
+    text-transform: uppercase;
+    border:none;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #6642FF;
+    color:#20FE90;
+    border-radius:20px;
+    transition-duration: 0.3s;
+}
+.bottone:hover{
+    background-color:#20FE90;
+    color:#6642FF;
+}
+
+.delete-card{
+    padding: 20px 20px;
+    border:none;
+    border-radius: 100%;
+    background-color:#EDEDED;
+    cursor:pointer;
+    transition-duration: 0.3s;
+}
+.delete-bucket{
+    width:100%;
+    border-radius:20px;
+    color:#20FE90;
+    padding: 10px 20px;
+    border:none;
+    background-color:#6642FF;
+    cursor:pointer;
+    transition-duration: 0.3s;
+}
+.delete-bucket:hover{
+    background-color:#0C1822;
+    color:RED;
+}
+#add-bucket-button{
+    padding: 10px 15px;
+    background-color: #EDEDED;
+    cursor:pointer;
+    transition-duration: 0.3s;
+}
+#add-bucket-button:hover{
+    background-color:#20FE90;
+}
+.delete-card i{
+    color: red;
+}
+.delete-card:hover{
+    background-color:#0C1822;
+    color:#20FE90;
+}
+
+.classe-titolo{
+    text-transform: uppercase;
+    font-size:35px;
+}
+.title-class{
+    margin: 2px 0;
+    text-transform: uppercase;
+}
+.bucket{
+    color: #20FE90;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #18232E;
+    text-align: center;
+    width:30%;
+    padding: 16px;
+    gap: 10px;
+    flex-direction: column;
+    margin: 10px 10px;
+}
+
+.cards-container{
+    
+    width:100%;
+    background-color:#EDEDED;
+    padding:10px;
+    display:flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.cards{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    background-color:#6642FF;
+    border-radius: 10px;
+    padding: 10px 0;
+
+}
+.cards-text{
+    flex-grow:1;
+}
+#dashboard-container{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
