@@ -15,6 +15,7 @@ userRouter.get("/", (req,res) =>{
     return res.send("Rotta del utente")
 });
 
+// FUNZIONE CHE VERIFICA L'EMAIL E LA PASSWORD
 async function verifyEmailAndPassword(email: string, password:string): Promise<User | null> {
     const user = await prisma.user.findUnique({
         where: {
@@ -29,16 +30,17 @@ async function verifyEmailAndPassword(email: string, password:string): Promise<U
 }
 return user
 }
-
+// FUNZIONE CHE SETTA L'EXPIRATION TIME DEL BEAR TOKEN RICHIEDE IN INPUT IL TEMPO IN MINUTI
 function getExpTime(min: number) {
     const now = Math.trunc(new Date().getTime() / 1000);
     return now + min * 60;
 }
 
+// FUNZIONE CHE GENERA IL TOKEN CON AL SUO INTERNO L'EXPIRATION TIME
 async function generateJwt(user: User):Promise<string> {
     const payload = {
         aud: 'access',
-        exp: getExpTime(2 * 60),
+        exp: getExpTime(1000 * 60), //SETTARE QUI L'EXPIRATION TIME [CAMBIARE (1000)];
         id: user.id,
         email: user.email,
     }
@@ -46,6 +48,15 @@ async function generateJwt(user: User):Promise<string> {
     return jwt.sign(payload, privateKey , { algorithm: 'RS256'});
 }
 
+// METODO POST PER LOGGARE
+// RICHIEDE NEL BODY DI INSOMNIA (JSON)
+/* ESEMPIO 
+    {
+	"email" : "ginopaoli@gimail.gino",
+	"password" : "ginogino"
+    }
+*/ 
+// COME RISULTATO CI RIPORTERA' A VIDEO IL BEARER TOKEN DA UTILIZZARE
 userRouter.post("/login",
     body('email').isEmail(),body('password').isString(),
     async (req,res) => {
@@ -65,6 +76,16 @@ userRouter.post("/login",
         accessToken: token,
     });
 });
+
+// METODO PER REGISTRARE UN NUOVO UTENTE
+// RICHIEDE NEL BODY DI INSOMNIA (JSON)
+/*
+    {
+	"email" : "ginopaoli@gimail.gino",
+	"password" : "ginogino", //LUNGHEZZA MINIMA DELLA PASSWORD SETTATA A 6
+	"name" : "Gino Paoli"
+    }
+*/
 userRouter.post("/register",
 body('email').isEmail(),body('password').isLength({min: 6}),body('name').isString(),async  (req,res) => {
 

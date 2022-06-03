@@ -141,7 +141,7 @@ export class DashboardService {
     async createContent(userId: string, dashboardId: string, text: string){
         const dashboard = await this.getDashboard(userId,dashboardId);
         if (!dashboard) {
-            return;
+            return null;
         }
         const countContent = await this.prisma.content.count({
             where: {
@@ -155,7 +155,7 @@ export class DashboardService {
                 dashboardId: dashboardId,
             },
         });
-    }
+    };
 
     async createDashboard(userId: string, name: string){
         const countDashboards = await this.prisma.dashboard.count();

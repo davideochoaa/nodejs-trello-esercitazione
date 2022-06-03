@@ -26,7 +26,7 @@ export async function getJwtKeys(): Promise<JwtKeys>{
     let keys = await prisma.jwtKey.findFirst();
     if (!keys){
         const genKeys = generateKeys();
-        keys = await prisma.jwtKey.create({
+            keys = await prisma.jwtKey.create({
             data: {
                 privateKey: genKeys.privateKey,
                 publicKey: genKeys.publicKey,

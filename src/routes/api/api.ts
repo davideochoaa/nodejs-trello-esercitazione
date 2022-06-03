@@ -10,7 +10,8 @@ const apiRouter = Router();
 apiRouter.use(express.json());
 const dashboardService = new DashboardService(prisma);
 
-async function verifyToken(header: string): Promise<string | null> {
+//METODO DI VERIFICA DEL TOKEN (BEARER TOKEN)
+export async function verifyToken(header: string): Promise<string | null> {
     if(!header){
         return null;
     }
@@ -30,6 +31,7 @@ async function verifyToken(header: string): Promise<string | null> {
     }
 }
 
+// AUTENTICAZIONE DELL'USER ID IN OGNI METODO 
 apiRouter.use(async (req,res, next) => {
     const authHeader = req.headers ['authorization'];
     const userId = await verifyToken(authHeader!);
@@ -42,9 +44,17 @@ apiRouter.use(async (req,res, next) => {
 
 
 apiRouter.get("/", (req,res) =>{
-    return res.send("Rotta delle API")
+    return res.send("Benvenuto! c:")
 });
 
+// METODO POST PER SPOSTARE LE DASHBOARD
+// RICHIEDE LA DASHBOARD ID CHE VOGLIAMO SPOSTARE
+// RICHIEDE ANCHE UN PARAMETRO PASSATO IN JSON : (DA INSERIRE NEL BODY)
+/* 
+    {
+    "position": 1 // NUOVA POSIZIONE DELLA DASHBOARD
+    }
+*/
 apiRouter.post('/:dashboardId/move',body('position').isInt(), async (req,res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
@@ -62,6 +72,15 @@ apiRouter.post('/:dashboardId/move',body('position').isInt(), async (req,res) =>
     res.send(dashboards);
 })
 
+// METODO POST PER SPOSTARE I CONTENUTI ALL'INTERNO DI UNA DASHBOARD O TRA DASHBOARDS
+// RICHIEDE LA DASHBOARD ID DI PROVENIENZE ALL'INTERNO DEL LINK INSIEME ALL'ID DEL CONTENUTO
+// RICHIEDE ANCHE UN PARAMETRO PASSATO IN JSON : (DA INSERIRE NEL BODY)
+/* ESEMPIO:
+    {
+	"position" : 0, //POSIZIONE DESIDERATA
+	"dashboardId" : "cl3r4bzm50019mkjneqaz4yq0" // //DASHBOARD DOVE VOGLIAMO SPOSTARE IL NOSTRO CONTENUTO
+    }
+*/
 apiRouter.post('/:dashboardId/:contentId/move', body('dashboardId').isString(),body('position').isInt(), async (req,res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
@@ -79,12 +98,16 @@ apiRouter.post('/:dashboardId/:contentId/move', body('dashboardId').isString(),b
     res.send(dashboards);
 });
 
+// METODO GET PER ESTRARRE TUTTE LE DASHBOARD DISPONIBILI DI UN DETERMINATO UTENTE
+// NON RICHIEDE NULLA
 apiRouter.get("/list", async (req,res) => {
     const userId = res.locals.userId;
     const dashboards = await dashboardService.getDashboards(userId);
     res.send(dashboards);
 });
 
+// METODO POST PER POTER CREARE UNA DASHBOARD BIANCA, SENZA CONTENUTI
+// NON RICHIEDE NULLA 
 apiRouter.post("/", body('name').isString(), async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
@@ -97,6 +120,8 @@ apiRouter.post("/", body('name').isString(), async (req, res) => {
     res.send(dashboards);
 })
 
+// METODO POST PER POTER CREARE CONTENUTI ALL'INTERNO DI UNA DASHBOARD 
+// RICHIEDE LA DASHBOARD ID DELLA DASHBOARD
 apiRouter.post("/:dashboardId", body('text').isString(), async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
@@ -110,6 +135,9 @@ apiRouter.post("/:dashboardId", body('text').isString(), async (req, res) => {
     res.send(dashboards);
 })
 
+// DELETE DI UNA DASHBOARD
+// RICHIEDE LA DASHBOARD ID
+// NON è POSSIBILE ELIMINARE UNA DASHBOARD CHE CONTIENE CONTENUTI (CARDS)
 apiRouter.delete("/:dashboardId", async (req,res) => {
     const userId = res.locals.userId;
     const {dashboardId} = req.params;
@@ -121,6 +149,8 @@ apiRouter.delete("/:dashboardId", async (req,res) => {
     res.send(dashboards);
 })
 
+// DELETE DI UN CONTENUTO ALL'INTERNO DI UNA DASHBOARD
+//RICHIEDE LA DASHBOARD ID CHE CONTIENE IL CONTENUTO E L'ID DEL CONTENUTO
 apiRouter.delete("/:dashboardId/:contentId", async (req,res) => {
     const userId = res.locals.userId;
     const {dashboardId, contentId} = req.params;
