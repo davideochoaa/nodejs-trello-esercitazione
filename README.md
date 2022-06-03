@@ -22,7 +22,11 @@ Utilizzare il risultato della precendete chiamata per associare a ogni dato la s
 Per clonare la repository 
 
 ```sh
-git clone https://github.com/devis98/WorkGroup2.git
+git clone git@github.com:davideochoaa/nodejs-trello-esercitazione.git
+```
+
+```sh
+git clone https://github.com/davideochoaa/nodejs-trello-esercitazione.git
 ```
 
 Per installare tutte le dipendenze necessarie, aprire la cartella da terminale ed eseguire:
@@ -41,6 +45,7 @@ in alternativa eseguire questi due comandi secondo l'ordine mostrato
 
 ```sh
 npx tsc --watch
+npx nodemon dist/src/index.js
 npx nodemon dist/index.js
 ```
 
