@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npx tsc --watch && npx nodemon dist/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate.make": "npx prisma migrate dev --create-only",
     "migrate": "npx prisma migrate dev && npx prisma generate",

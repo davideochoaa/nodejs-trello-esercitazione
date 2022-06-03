@@ -1,6 +1,4 @@
-# Week 2 
-
-Esercitazione di gruppo
+# Week 4 Esercitazione di gruppo
 
 Gli obbiettivi/task da svolgere sono i seguenti:
 
@@ -62,3 +60,24 @@ git push origin develop
 ```
 
 Utilizzare Insomnia o Postman per il test delle richieste.
+
+# INSOMNIA O POSTMAN - TEST DELLE RICHIESTE API
+
+Per poter testare le richieste api avremmo bisogni di insomnia o postman e configurare al meglio ogni richiesta.
+
+
+1. EFFETTUARE LA REGISTRAZIONE DI UN UTENTE METODO POST
+(Bearer Token NON NECESSARIO)
+INSERIRE NELL'URL :
+
+```sh
+http://localhost:3333/user/register
+```
+INSERIRE ALL'INTERNO DEL BODY (JSON) [ESEMPIO]
+```sh
+{
+	"email" : "ginopaoli@gimail.gino",
+	"password" : "ginogino",
+	"name" : "Gino Paoli"
+}
+```
