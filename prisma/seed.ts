@@ -27,12 +27,16 @@ async function main(){
             contents: {
                 create: [
                     {
+                    title: "title of content",
                     text:"ciao a tutti",
                     position:0,
+                    like: 1
                     },
                     {
+                    title: "title of content",
                     text: "ciao a tutti2",
                     position:1, 
+                    like: 1
                     },
                 ],
             },
@@ -46,12 +50,16 @@ async function main(){
             contents: {
                 create: [
                     {
+                    title: "title of content",
                     text:"sono dentro la dashboard 2",
                     position:0,
+                    like: 1
                     },
                     {
+                    title: "title of content",
                     text: "anche io ma sto sotto, in position 1",
                     position:1, 
+                    like: 1
                     },
                 ],
             },
@@ -65,12 +73,16 @@ async function main(){
             contents: {
                 create: [
                     {
+                    title: "title of content",
                     text:"sono dentro la dashboard 3",
                     position:0,
+                    like: 1,
                     },
                     {
+                    title: "title of content",
                     text: "anche io ma sto sotto, in position 1",
                     position:1, 
+                    like: 20,
                     },
                 ],
             },

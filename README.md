@@ -1,10 +1,10 @@
-# Week 4 Esercitazione di gruppo
+# Week 5 Esercitazione di gruppo
 
 Gli obbiettivi/task da svolgere sono i seguenti:
 
 1.  Effettuare il GET delle Dashboard, alzare il server dell'esercizio precedente(Trello). Modificare la chiamata affinche non serva un utente specifico ma solo e soltanto il contenuto per creare una dashboard(utilizzando id dashboad). Fare questo non appena il componente è visibile sulla schermata
 
-2. Salvare il risultato della chiamata invocata la promise , aspettare risoluzione della promise e salvare il risultato dentro il componente.
+2. Salvare il risultato della chiamata, invocata la promise , aspettare la risoluzione della promise e salvare il risultato dentro il componente.
 
 3. All'interno del render utilizzare i dati dell'api per renderizzare la giusta UI. 
 Utilizzare il risultato della precendete chiamata per associare a ogni dato la sua parte di UI
@@ -21,7 +21,7 @@ Per clonare la repository
 
 ```sh
 git clone git@github.com:davideochoaa/nodejs-trello-esercitazione.git
-```
+``
 
 ```sh
 git clone https://github.com/davideochoaa/nodejs-trello-esercitazione.git

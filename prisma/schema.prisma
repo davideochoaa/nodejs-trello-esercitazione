@@ -16,6 +16,7 @@ model User {
   email        String      @unique
   passwordHash String
   dashboards   Dashboard[]
+  comments     Comment[]
 }
 
 model Dashboard {
@@ -23,6 +24,7 @@ model Dashboard {
   name     String
   position Int //position ci servirà per definire l'ordine
   contents Content[]
+  comments Comment[]
   user     User      @relation(fields: [userId], references: [id])
   userId   String
 
@@ -32,9 +34,13 @@ model Dashboard {
 model Content {
   id          String    @id @default(cuid())
   text        String
+  title       String
+  img         String    @default("")
   position    Int
   dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
   dashboardId String
+  like        Int       @default(0)
+  comments    Comment[]
 
   @@unique([id, dashboardId])
 }
@@ -43,4 +49,19 @@ model JwtKey {
   id         Int    @id @default(autoincrement())
   privateKey String
   publicKey  String
+}
+
+model Comment {
+  id          String    @id @default(cuid())
+  text        String
+  position    Int
+  like        Int
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
+  content     Content   @relation(fields: [contentsId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  contentsId  String
+  dashboardId String
+
+  @@unique([id, contentsId])
 }

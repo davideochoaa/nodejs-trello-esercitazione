@@ -129,17 +129,45 @@ apiRouter.post("/", (0, express_validator_1.body)('name').isString(), (req, res)
 }));
 // METODO POST PER POTER CREARE CONTENUTI ALL'INTERNO DI UNA DASHBOARD 
 // RICHIEDE LA DASHBOARD ID DELLA DASHBOARD
-apiRouter.post("/:dashboardId", (0, express_validator_1.body)('text').isString(), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+apiRouter.post("/:dashboardId", (0, express_validator_1.body)('text').isString(), (0, express_validator_1.body)('title').isString(), (0, express_validator_1.body)('img').isString(), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
     const userId = res.locals.userId;
     const { dashboardId } = req.params;
-    const { text } = req.body;
-    yield dashboardService.createContent(userId, dashboardId, text);
+    const { text, title, img } = req.body;
+    yield dashboardService.createContent(userId, dashboardId, text, title, img);
     const dashboards = yield dashboardService.getDashboards(userId);
     res.send(dashboards);
+}));
+//CREAZIONE DI UN COMMENTO
+apiRouter.post("/:dashboardId/:contentsId", (0, express_validator_1.body)('text').isString(), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const errors = (0, express_validator_1.validationResult)(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const userId = res.locals.userId;
+    const { contentsId, dashboardId } = req.params;
+    const { text } = req.body;
+    yield dashboardService.createComment(userId, contentsId, text, dashboardId);
+    const dashboards = yield dashboardService.getDashboards(userId);
+    res.send(dashboards);
+}));
+apiRouter.put("/likeOnComment/:commentId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { commentId } = req.params;
+    const gino = yield dashboardService.putLikeOnComment(commentId);
+    res.send(gino);
+}));
+apiRouter.put("/likeOnContent/:contentId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { contentId } = req.params;
+    const gino = yield dashboardService.putLikeOnContent(contentId);
+    res.send(gino);
+}));
+apiRouter.put("/dislikeOnContent/:contentId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { contentId } = req.params;
+    const gino = yield dashboardService.leaveLikeOnContent(contentId);
+    res.send(gino);
 }));
 // DELETE DI UNA DASHBOARD
 // RICHIEDE LA DASHBOARD ID

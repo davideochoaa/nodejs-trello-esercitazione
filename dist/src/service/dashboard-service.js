@@ -51,7 +51,21 @@ class DashboardService {
                     orderBy: {
                         position: 'asc',
                     },
+                    include: {
+                        comments: {
+                            orderBy: {
+                                position: 'asc',
+                            },
+                        }
+                    },
                 },
+            },
+        });
+    }
+    getComments(commentId) {
+        return this.prisma.comment.findUnique({
+            where: {
+                id: commentId,
             },
         });
     }
@@ -138,7 +152,7 @@ class DashboardService {
     }
     ;
     /////////////////////////////////////////////////////
-    createContent(userId, dashboardId, text) {
+    createContent(userId, dashboardId, text, title, img) {
         return __awaiter(this, void 0, void 0, function* () {
             const dashboard = yield this.getDashboard(userId, dashboardId);
             if (!dashboard) {
@@ -153,12 +167,75 @@ class DashboardService {
                 data: {
                     position: countContent,
                     text: text,
+                    title: title,
                     dashboardId: dashboardId,
+                    like: 0,
+                    img: img,
                 },
             });
         });
     }
     ;
+    createComment(userId, contentsId, text, dashboardId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const dashboard = yield this.getContent(dashboardId, contentsId);
+            if (!dashboard) {
+                return null;
+            }
+            const countComment = yield this.prisma.comment.count({
+                where: {
+                    contentsId: contentsId,
+                },
+            });
+            return yield this.prisma.comment.create({
+                data: {
+                    position: countComment,
+                    text: text,
+                    contentsId: contentsId,
+                    dashboardId: dashboardId,
+                    userId: userId,
+                    like: 0,
+                },
+            });
+        });
+    }
+    ;
+    putLikeOnComment(commentId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.prisma.comment.update({
+                where: {
+                    id: commentId,
+                },
+                data: {
+                    like: { increment: 1 },
+                },
+            });
+        });
+    }
+    putLikeOnContent(contentId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.prisma.content.update({
+                where: {
+                    id: contentId,
+                },
+                data: {
+                    like: { increment: 1 },
+                },
+            });
+        });
+    }
+    leaveLikeOnContent(contentId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.prisma.content.update({
+                where: {
+                    id: contentId,
+                },
+                data: {
+                    like: { decrement: 1 },
+                },
+            });
+        });
+    }
     createDashboard(userId, name) {
         return __awaiter(this, void 0, void 0, function* () {
             const countDashboards = yield this.prisma.dashboard.count();
@@ -182,7 +259,7 @@ class DashboardService {
                     dashboardId: dashboardId,
                 },
             });
-            if (contentsInDashboard > 0) {
+            if (contentsInDashboard >= 0) {
                 return null;
             }
             const dashboards = yield this.prisma.dashboard.findMany();
@@ -225,6 +302,23 @@ class DashboardService {
                     userId: userId,
                 },
             },
+        });
+    }
+    getContent(dashboardId, contentId) {
+        return this.prisma.content.findUnique({
+            where: {
+                id_dashboardId: {
+                    id: contentId,
+                    dashboardId: dashboardId,
+                },
+            },
+        });
+    }
+    getComment(commentId) {
+        return this.prisma.comment.findUnique({
+            where: {
+                id: commentId,
+            }
         });
     }
 }
