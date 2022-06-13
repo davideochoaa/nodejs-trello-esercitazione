@@ -122,17 +122,49 @@ apiRouter.post("/", body('name').isString(), async (req, res) => {
 
 // METODO POST PER POTER CREARE CONTENUTI ALL'INTERNO DI UNA DASHBOARD 
 // RICHIEDE LA DASHBOARD ID DELLA DASHBOARD
-apiRouter.post("/:dashboardId", body('text').isString(), async (req, res) => {
+apiRouter.post("/:dashboardId", body('text').isString(), body('title').isString(),body('img').isString(), async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()});
     }
     const userId = res.locals.userId;
     const {dashboardId} = req.params!;
-    const { text } = req.body
-    await dashboardService.createContent(userId,dashboardId,text);
+    const { text, title, img } = req.body
+    await dashboardService.createContent(userId,dashboardId,text, title, img);
     const dashboards = await dashboardService.getDashboards(userId);
     res.send(dashboards);
+})
+
+//CREAZIONE DI UN COMMENTO
+apiRouter.post("/:dashboardId/:contentsId", body('text').isString(), async(req,res)=>{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()});
+    }
+    const userId = res.locals.userId;
+    const {contentsId,dashboardId} = req.params!;
+    const {text} = req.body
+    await dashboardService.createComment(userId, contentsId, text,dashboardId);
+    const dashboards = await dashboardService.getDashboards(userId);
+    res.send(dashboards);
+})
+
+apiRouter.put("/likeOnComment/:commentId", async(req,res) =>{
+    const { commentId} = req.params;
+    const gino = await dashboardService.putLikeOnComment(commentId);
+    res.send(gino);
+})
+
+apiRouter.put("/likeOnContent/:contentId", async(req,res) =>{
+    const {contentId} = req.params;
+    const gino = await dashboardService.putLikeOnContent(contentId);
+    res.send(gino);
+})
+
+apiRouter.put("/dislikeOnContent/:contentId", async(req,res) => {
+    const {contentId} = req.params;
+    const gino = await dashboardService.leaveLikeOnContent(contentId);
+    res.send(gino);
 })
 
 // DELETE DI UNA DASHBOARD

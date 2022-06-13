@@ -1,4 +1,4 @@
-import { Content, Dashboard, PrismaClient } from "@prisma/client";
+import { Content, Dashboard, PrismaClient, Comment } from "@prisma/client";
 
 export class DashboardService {
     constructor(private readonly prisma: PrismaClient){}
@@ -41,7 +41,22 @@ export class DashboardService {
                     orderBy: {
                         position:'asc',
                     },
+                    include: {
+                        comments: {
+                            orderBy: {
+                            position:'asc',
+                            },
+                    }
                 },
+                },
+            },
+        });
+    }
+
+    getComments(commentId: string) {
+        return this.prisma.comment.findUnique({
+            where: {
+                id: commentId,
             },
         });
     }
@@ -138,7 +153,7 @@ export class DashboardService {
 
     /////////////////////////////////////////////////////
 
-    async createContent(userId: string, dashboardId: string, text: string){
+    async createContent(userId: string, dashboardId: string, text: string, title: string, img: String){
         const dashboard = await this.getDashboard(userId,dashboardId);
         if (!dashboard) {
             return null;
@@ -152,10 +167,66 @@ export class DashboardService {
             data:{
                 position: countContent,
                 text: text,
+                title: title,
                 dashboardId: dashboardId,
+                like: 0,
+                img: img,
             },
         });
     };
+
+    async createComment(userId: string, contentsId: string, text: string, dashboardId: string){
+        const dashboard = await this.getContent(dashboardId, contentsId);
+        if (!dashboard) {
+            return null;
+        }
+        const countComment = await this.prisma.comment.count({
+            where: {
+                contentsId: contentsId,
+            },
+        });
+        return await this.prisma.comment.create({
+            data:{
+                position: countComment,
+                text: text,
+                contentsId: contentsId,
+                dashboardId: dashboardId,
+                userId: userId,
+                like : 0,
+            },
+        });
+    };
+
+    async putLikeOnComment(commentId:string){
+        return await this.prisma.comment.update({
+            where: {
+                id: commentId,
+            },
+            data:{
+                like: {increment: 1},
+            },
+        });
+    }
+    async putLikeOnContent(contentId:string){
+        return await this.prisma.content.update({
+            where: {
+                id: contentId,
+            },
+            data:{
+                like: {increment: 1},
+            },
+        });
+    }
+    async leaveLikeOnContent(contentId:string){
+        return await this.prisma.content.update({
+            where: {
+                id: contentId,
+            },
+            data:{
+                like: {decrement: 1},
+            },
+        })
+    }
 
     async createDashboard(userId: string, name: string){
         const countDashboards = await this.prisma.dashboard.count();
@@ -178,7 +249,7 @@ export class DashboardService {
                 dashboardId: dashboardId,
             },
         });
-        if (contentsInDashboard > 0 ){
+        if (contentsInDashboard >= 0 ){
             return null;
         }
         const dashboards = await this.prisma.dashboard.findMany();
@@ -223,6 +294,25 @@ export class DashboardService {
                 },
             },
         });
+    }
+
+    getContent(dashboardId: string, contentId: string){
+        return this.prisma.content.findUnique({
+            where: {
+                id_dashboardId: {
+                    id: contentId,
+                    dashboardId: dashboardId,
+                },
+            },
+        });
+    }
+
+    getComment(commentId: string){
+        return this.prisma.comment.findUnique({
+            where: {
+                id: commentId,
+            }
+        })
     }
 
 };
